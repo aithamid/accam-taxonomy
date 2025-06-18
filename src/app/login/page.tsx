@@ -31,7 +31,7 @@ export default async function AuthenticationPage() {
             quality={100}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
-            Erena - Taxonomy
+            ACCAM Taxonomy
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">

@@ -100,12 +100,12 @@ export default function Dashboard() {
       jsonfile: selectedType.jsonfile,
     };
 
-    setFiles((prev) => [...prev, newFile]);
+    setFiles((prev) => (prev ? [...prev, newFile] : [newFile]));
     form.reset();
   };
 
   const handleDelete = (id: string) => {
-    setFiles((prev) => prev.filter((file) => file.id !== id));
+    setFiles((prev) => (prev ? prev.filter((file) => file.id !== id) : []));
   };
 
   const handleDuplicate = (file: TaxonomyFileExample) => {
@@ -114,12 +114,12 @@ export default function Dashboard() {
       id: crypto.randomUUID(),
       name: `${file.name} (Copy)`,
     };
-    setFiles((prev) => [...prev, duplicateFile]);
+    setFiles((prev) => (prev ? [...prev, duplicateFile] : [duplicateFile]));
   };
 
   const handleRename = (id: string, newName: string) => {
     setFiles((prev) =>
-      prev.map((file) =>
+      (prev ?? []).map((file) =>
         file.id === id ? { ...file, name: newName } : file
       )
     );

@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "Init",
-        "Dashboard"
+        "Dashboard",
+        "File ID Page"
     ]
 }

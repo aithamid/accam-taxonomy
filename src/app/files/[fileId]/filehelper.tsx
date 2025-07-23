@@ -15,6 +15,7 @@ import { GlobalView } from "@/components/diagram/datahandler";
 import { Files } from "@prisma/client";
 import { on } from "events";
 import { updateFile } from "@/server/actions";
+import { TaxonomyFileExample } from "@/app/dashboard/page";
 
 export function FileRenderer(file : Files) {
   const json = file.jsonfile as Taxo;
@@ -33,11 +34,27 @@ export function FileRenderer(file : Files) {
 
   function onChange(data: z.infer<typeof taxonomySchema>) {
     handleLayersUpdate(data.layers);
+    onSubmit(data);
   }
 
-  async function onSubmit(data: z.infer<typeof taxonomySchema>) {
-    const update = await updateFile(data, file.id);
-    console.log("test");
+  function onSubmit(data: z.infer<typeof taxonomySchema>) {
+    // Get taxonomy file from form localstorage
+    const taxonomyFiles = window.localStorage.getItem("taxonomyFiles");
+    if (!taxonomyFiles) {
+      console.error("No taxonomy files found in localStorage");
+      return;
+    }
+    
+    const parsedFiles = JSON.parse(taxonomyFiles) as TaxonomyFileExample[];
+    const fileIndex = parsedFiles.findIndex((f) => f.id === file.id);
+    if (fileIndex === -1) {
+      console.error("File not found in localStorage");
+      return;
+    }
+
+    // Update the file in localStorage
+    parsedFiles[fileIndex].jsonfile = data;
+    window.localStorage.setItem("taxonomyFiles", JSON.stringify(parsedFiles));
   }
 
   return (

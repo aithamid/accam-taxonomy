@@ -2,7 +2,6 @@
 "use client";
 import { redirect } from "next/navigation";
 import { FileRenderer } from "./filehelper";
-import { Navbar } from "@/components/login/Navbar";
 import Link from "next/link";
 
 function getFile (fileId: string) {

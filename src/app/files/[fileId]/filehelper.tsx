@@ -12,12 +12,9 @@ import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import { Form } from "@/components/ui/form";
 import { GlobalView } from "@/components/diagram/datahandler";
-import { Files } from "@prisma/client";
-import { on } from "events";
-import { updateFile } from "@/server/actions";
 import { TaxonomyFileExample } from "@/app/dashboard/page";
 
-export function FileRenderer(file : Files) {
+export function FileRenderer(file : TaxonomyFileExample) {
   const json = file.jsonfile as Taxo;
   const [layers, setLayers] = useState<Layers>(json.layers);
 

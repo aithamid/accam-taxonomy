@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "Init",
         "Dashboard",
-        "File ID Page"
+        "File ID Page",
+        "Remove database"
     ]
 }

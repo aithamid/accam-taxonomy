@@ -246,7 +246,7 @@ function EditFileName({
         <SheetHeader>
           <SheetTitle>Edit file name</SheetTitle>
           <SheetDescription>
-            Change your file name here. Click save when you're done.
+            Change your file name here. Click save when you are done.
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>

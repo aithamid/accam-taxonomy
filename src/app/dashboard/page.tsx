@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,7 +35,7 @@ import {
 import { Label } from "@/components/ui/label";
 
 // Types
-interface TaxonomyFileExample {
+export interface TaxonomyFileExample {
   id: string;
   name: string;
   jsonfile: Record<string, any>;
@@ -63,18 +63,24 @@ const renameFormSchema = z.object({
 });
 
 export default function Dashboard() {
-  const [files, setFiles] = useState<TaxonomyFileExample[]>([
-    {
-      id: "file-001",
-      name: "Taxonomy1",
-      jsonfile: fileTypeList[0].jsonfile
-    },
-    {
-      id: "file-002",
-      name: "Taxonomy2",
-      jsonfile: fileTypeList[0].jsonfile
-    },
-  ]);
+  const [files, setFiles] = useState<TaxonomyFileExample[] | null>(null);
+
+  // Initialize files from localStorage
+  useEffect(() => {
+    const storedFiles = localStorage.getItem("taxonomyFiles");
+    if (storedFiles) {
+      setFiles(JSON.parse(storedFiles));
+    } else {
+      setFiles([]);
+    }
+  }, []);
+
+  // Save files to localStorage whenever they change
+  useEffect(() => {
+    if (files !== null) {
+      localStorage.setItem("taxonomyFiles", JSON.stringify(files));
+    }
+  }, [files]);
 
   const form = useForm<z.infer<typeof typeformSchema>>({
     resolver: zodResolver(typeformSchema),
@@ -180,7 +186,7 @@ export default function Dashboard() {
         <div className="w-3/4">
           <h2 className="text-xl font-semibold mb-4 text-center">Your Files</h2>
           <ul>
-            {files.map((file) => (
+            {files !== null && files.map((file) => (
               <Card key={file.id} className="h-14 p-2 m-3">
                 <div className="flex justify-between items-center ">
                   <div>

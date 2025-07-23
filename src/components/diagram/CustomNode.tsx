@@ -15,7 +15,7 @@ export function MyCustomNode({ data }: NodeProps<NodeData>) {
     return MultiChoice(data.input);
   }
   if (data.input.newClass) {
-    return NewClass(data.input);
+    return NewClassFun(data.input);
   }
   if (data.input.double === "" || data.input.double !== undefined) {
     return Double(data.input);
@@ -114,7 +114,7 @@ function SpecialMultiChoice(input: InputType) {
   }
 }
 
-function NewClass(input: InputType) {
+function NewClassFun(input: InputType) {
   let list: NewClass[] = input.newClass ?? [];
 
   return (
